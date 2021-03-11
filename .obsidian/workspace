@@ -4,13 +4,13 @@
     "type": "split",
     "children": [
       {
-        "id": "e869db35e001c339",
+        "id": "8fc27f16daad7831",
         "type": "leaf",
         "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Bergen.md",
+            "file": "README.md",
             "mode": "source"
           }
         }
@@ -69,7 +69,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Bergen.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -82,10 +81,10 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "lastOpenFiles": [
+    "Bergen.md",
     "Untitled.md"
   ]
 }
