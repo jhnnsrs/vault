@@ -1,0 +1,43 @@
+---
+id: graphql    
+title: GraphQL
+sidebar_label: GraphQL
+slug: /graphql
+---
+
+import {GraphQLPlayground} from "../../src/components/playgrounds/graphql/GraphQLPlayground"
+
+### What is GraphQL
+
+GraphQL is a structured query language developed by facebook for their massive relational user data.
+Dealing with visualizing this relational data proved quite a challenge for the UI designers as with
+classical models it was hard to get exactly the data needed. This is why they developed GraphQL:
+
+Its easiest to understand as a contract between the person querying the data and the server that
+will give exactly that data back, resolving the complex data queries on the databases. A complex
+dataquery that would result in writing multiple custom SQL Queries boils then down to just
+specifying what data you want in which structure.
+
+On top of that GraphQL provides some unique features that make it a perfect fit for scientific data:
+
+- (auto-generated) Schema and Documentation
+- strongly typed
+- code generation libraries for typescript and javascript
+- allows real time updates
+
+
+### Interaction
+
+:::warning
+
+This is by no means a complete introduction to GraphQL. As a standard in webdevelopment you will find a lot
+of tutorials on how to get you started.
+
+[GraphQL Official](https://graphql.org/learn/queries/) [How to GraphQL](https://www.howtographql.com/)
+
+:::
+
+<GraphQLPlayground initialQuery="query {representations(order: ['-meta__time_index']){id data}}"/>
+
+The Above example is a GraphQL Playground for easy Prototyping of your Queries. Take some time to
+familiarize with the interface.

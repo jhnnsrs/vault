@@ -1,13 +1,280 @@
 ---
-id: provide
+id: ressources
 title: Ressource Management
 sidebar_label: Ressource Management
-slug: /provide
+slug: /ressources
 ---
 
 ## Introduction 
 
+What even is a Reservation?
+
+If you have ever gone to a restaurant and didn't get a seat because everything was booked, you already experienced.
+
+
+You have a microscope that can only run one experiment at a time, but you have multiple users accessing this resource and
+wanting to run their analysis at the same time.
+
+Now organization of this resources doesnt even work with humans, so what is a way of dealing with that in programmatic code.
+
+We already introduced the concept of asynchronous programming. One other little helper
+is a reservation.
+
+consider this code snippet:
+
+
+
+```python
+stream = use(package="microscope", interface="well_stream")
+show = use(package="elements", interface="show").on("napari@johannes")
+
+for image in stream(well_x=3, well_y=3, interval=5):
+	show(image)
+
+
+```
+
+Easy enough workflow right? You acquire images on the Well on Position X and Y every 5 seconds
+and then show the image to Johannes on his Napari instance.
+But now someone in your lab is doing the following:
+
+
+```python
+stream = use(package="microscope", interface="well_stream")
+show = use(package="elements", interface="show").on("napari@johannes")
+
+for image in stream(well_x=8, well_y=6, interval=5):
+	show(image)
+
+```
+
+
+
+
+Reservation to the rescue!
+
+Besides the integration of a messaging system between different apps,
+Arkitekt also allows apps to declare policies on how they are able to be called
+concurrently by different users, and if they want to instantiate again if other users
+are trying to call them.
+
+
+Default Behaviour:
+
+```python
+
+@client.enable()
+def calculate_intensity_maximum(rep: Representation): -> int
+	"""
+	
+	
+	"""
+	assert rep.variety = RepresentationVariety.VOXEL, "Your Image must be an intensity image!"
+	return rep.data.max()
+
+
+```
+
+Think about this function. It takes an image and calculates its intensity without any other
+interaction with anything outside this function. It doesn't alter anything outside of its scope. 
+It is *pure* (fancy functional word). This type of function lends itself to be parallized and it doesn't really matter who assigns to it in which order .
+
+If we were dealing only with this sort of function, we could be happy and our analysis would parallelize
+easily. Sadly writing completely pure functions is not that trivial and if you every interacted with a microscope
+or another human being you realised that you cannot just spwan another human or microscope whenever you needed.
+
+They are a limited resource, that means if we want to assign tasks to them we need to take this into account.
+
+```python title="app.py (with config.yaml of app: *sted-microscope*)"
+from arkitekt import Client
+from arkitekt.policy import GroupPolicy
+from microscope import MicroscopeAPI
+from elements import Representation
+
+
+client = Client()
+
+microscope_api = MicroscopeAPI()
+
+microscope_policy = GroupPolicy( # This policy applies to a whole GROUP
+	instance = 1 # Allow only one instance in this group
+	users_per_instance = 1 # Allow only one user per instance in this group
+	user_roles = ["senior"] # Only seniors can reserve this microscope
+	provide_time = 3600 # Allow an hour of usage time until we 
+)
+
+
+@client.enable(policy=microscope_policy,
+ on_provide=lambda handler: microscope_api.ensure_multi_well_mode(),
+ on_unprovide=lambda handler: microscope.turn_off()
+)  # Ensures the microscope is turned on and in well mode when somebody wants to stream wells, and make sure it is turned of afterwards
+def stream_wells(well=5, interval=6): -> Representation
+
+	for i in well:
+		image = microscope_api.acquire_well(well)
+		yield Representation.objects.from_xarray(image)
+		time.sleep(interval)
+
+
+@client.enable(policy=microscope_policy, 
+	on_provide=lambda handler: microscope_api.ensure_single_well_mode(),
+ 	on_unprovide=lambda handler: microscope.turn_off()
+)
+def acquire_well(x=5): -> Representation
+	image = microscope_api.acquire_well(well)
+	return Representation.objects.from_xarray(image)
+
+
+client.run()
+```
+
+This ensures that if you want to call any of this function through arkitekt it will ensure that both stream_well
+and microscope are only being provided once at a time. Also it puts the microscope in different modes throughout 
+the entire time one user has *reserved* this microscope (through on_provide, on_unprovide handlers). These methods have 
+now become *stateful*.
+
+
+## What this allows us to do!
+
+Tom:
+
+```python
+acquire_well = use(package="microscope", interface="acquire_well")
+show = use(package="elements", interface="show").on("napari@me")
+
+image = acquire_well(x=5)
+
+
+```
+
+Karl:
+
+```python
+stream = use(package="microscope", interface="acquire_well")
+show = use(package="elements", interface="show").on("napari@me")
+
+for image in stream(well_x=3, well_y=3, interval=5):
+	show(image)
+
+
+```
+
+Both Tom and Karl can code their own workflows without bothering about the resources, or when they have the microscope.
+Their script will just pause signalling a wait for the node to become active.
+
+### Lifecycle of a Reservation
+
+##### Initialization
+Reservation -> Acknowledged -> Waiting 
+##### Cycle
+Active -> Failed -> Retry -> Critical
+
+
+
+
+
+## And Even more fine grained control
+
+Tom wants his script to run after 20pm and on a connection lost cancel the script
+
+```python
+from arkitekt import Client, use
+import elements
+
+acquire_well = await use(package="microscope", interface="acquire_well")
+show = await use(package="elements", interface="show")
+
+
+images = []
+async with acquire_well.reserve(start="20.00pm", exit=["lost"]) as res:
+	images.append(await res.assign(x=5))
+
+async with show.reserve(start="9.00pm", exit=["lost"]) as res:
+	for image in images:
+		await res.assign(image)
+
+```
+
+
+
+
+
+
+And of course runs this snippet at the same time. What do you want to happen?
+
+- Do you want the second script to just fail?
+- You might want the second script to run after the first one?
+- YOu might want to pause the first script and intercept the second one?
+
+How can you even tell that to your program?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Example:
+
+A microscope is a physical entitiy that doesnt allow any sort of parallelism. (You cannot just create another
+microscope on the fly now anyways)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Resources in a lap environment are always limited and access needs to be controlled if we want to use workflows.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ```python
@@ -17,17 +284,17 @@ import matplotlib.pyplot as plt
 
 
 with Bergen():
-	maxisp = Node.objects.get(package="basic", interface="maxisp")
+	maxisp =use(package="basic", interface="maxisp")
 	
-	with maxisp.provide(n=10, app="imagej") as pod:
-		results = []
+	results = []
+	with maxisp.reserve(n=10, app="imagej") as res:
 		for rep in Representation.objects.filter(experiment="testing"):
-			results.append(pod.assign({"rep": rep})
+			results.append(res.assign({"rep": rep})
 			
-		plt.imshow(results[0].data)
+	plt.imshow(results[0].data)
 ```
 
-This Code will look for the MaxISP nodes and try to provide 10 instances of the ImageJ version of this Node (If more then one template exists it will use the first one). Then it will will get all Representations filtered by the experiment name (testing) and for each of the rep its going to create a maxisp projection. (None of these tasks however will be run on the machine calling this). Please note that all of these tasks are running sequentially.
+This Code will look for the MaxISP nodes and try to reserve 10 instances of the ImageJ version of this Node. Then it will will get all Representations filtered by the experiment name (testing) and for each of the rep its going to create a maxisp projection. (None of these tasks however will be run on the machine calling this). Please note that all of these tasks are running sequentially.
 
 No we will takeone step into the asynchronous world:
 
@@ -38,12 +305,12 @@ import matplotlib.pyplot as plt
 
 
 async with Bergen():
-	maxisp = await Node.asyncs.get(package="basic", interface="maxisp")
+	maxisp = await use(package="basic", interface="maxisp")
 	
-	async with maxisp.provide(n=10, app="imagej") as pod:
+	async with maxisp.reserve(n=10, app="imagej") as pod:
 		results = []
 		for rep in await Representation.asyncs.filter(experiment="testing"):
-			results.append(await pod.assign({"rep": rep})
+			results.append(await res.assign({"rep": rep})
 			
 		plt.imshow(results[0].data)
 ```

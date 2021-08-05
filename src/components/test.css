@@ -1,0 +1,32 @@
+
+
+.wrapper {
+    background-color:var(--test-query-background);
+    border: 1px;
+    border-radius: 7px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+.wrapper .supertoolbar {
+   display: flex;
+   flex-direction: row;
+   margin-bottom: 1rem;
+}
+
+.wrapper .supertoolbar .title {
+    color: white
+}
+
+.wrapper .supertoolbar .buttonbar {
+    margin-left: auto;
+}
+
+
+  
+.wrapper .supertoolbar .buttonbar button{
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+  

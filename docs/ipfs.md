@@ -9,7 +9,9 @@ slug: /ipfs
 
 ## Arkitekt and ipfs
 
-
+| Google | Facebook
+| ------ | --------
+| 5 | 5
 
 
 ## Representation Abstraction

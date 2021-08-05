@@ -5,15 +5,19 @@ module.exports = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
-  organizationName: 'jhnnsrs', // Usually your GitHub org/user name.
+  favicon: 'img/favi.png',
+  organizationName: 'jhnnsrs',
+  themes: ['@docusaurus/theme-live-codeblock'], // Usually your GitHub org/user name.
   projectName: 'arkitekt', // Usually your repo name.
   themeConfig: {
+    colorMode: {
+      disableSwitch: true
+    },
     navbar: {
-      title: 'Arkitekt',
+      title: '',
       logo: {
         alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        src: 'img/arkitekt.png',
       },
       items: [
         {
@@ -102,4 +106,7 @@ module.exports = {
       },
     ],
   ],
+  customFields: {
+    elementsEndpoint: 'ws://localhost:8080/graphql/'
+  }
 };

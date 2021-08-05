@@ -1,0 +1,13 @@
+.testimages .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    row-gap: 1rem;
+    grid-auto-rows: minmax(100px, auto);
+}
+.testimages .repcard {
+    background-color: aliceblue;
+    border: 1px solid rgb(109, 108, 108);
+    border-radius: 0.7rem;
+    padding: 1rem;
+}
