@@ -8,10 +8,133 @@
     margin-bottom: 1rem;
   }
 
+
+
+
+.graphql-explorer .docExplorerWrap {
+    background-color:var(--test-query-background);
+    width: 40px;
+    display: flex;
+}
+
+.graphql-explorer .graphiql-explorer-root {
+    min-height: 100%;
+    height: max-content;
+
+}
+
+.graphql-explorer .graphiql-explorer-root > div {
+    /* Real Explorer Area */
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    background-color: #ffffff;
+    padding: 0.5rem;
+
+}
+
+.graphql-explorer .graphiql-explorer-root > div > input {
+    /* Real Explorer Area */
+    width: 4rem;
+    padding: 0.5rem;
+
+}
+
+.graphql-explorer .graphiql-explorer-graphql-arguments > div > span > input {
+    /* Real Explorer Area */
+    width: 5rem !important;
+
+}
+
+.graphql-explorer .graphiql-explorer-root > div ~ div{
+    /* Actions  Area */
+    padding: 0rem;
+    background-color:var(--test-query-background);
+
+}
+
+.graphql-explorer .graphiql-explorer-actions {
+    border-top: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    background-color:var(--test-query-background);
+
+}
+
+.graphql-explorer .graphiql-explorer-actions > span {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    background-color:var(--test-query-background);
+
+}
+
+.graphql-explorer .graphiql-explorer-actions > select {
+    background-color:var(--test-query-background);
+    color: #ffffff;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.2rem;
+
+}
+
+.graphql-explorer .graphiql-explorer-actions > button {
+    background-color:var(--test-query-background) !important;
+
+}
+.graphql-explorer .graphiql-explorer-actions > button > span {
+    color: #ffffff;
+    font-size: large;
+
+}
+
+
+.graphql-explorer .doc-explorer-title-bar {
+    background-color:var(--test-query-background);
+    color:  #ffffff;
+    display: flex;
+    flex-direction: row;
+    padding-left: 0.5rem;
+    height: 60em;
+}
+
+.graphql-explorer .doc-explorer-rhs {
+    background-color:var(--test-query-background);
+    color:  #ffffff;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+}
+
+.graphql-explorer .doc-explorer-title {
+    background-color:var(--test-query-background);
+    flex-grow: 1;
+    height: 1rem;
+    
+}
+
+.graphql-explorer .graphiql-explorer-node {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.graphql-explorer .doc-explorer-contents {
+    background-color:var(--test-query-background);
+    min-height: 100%;
+    min-width: 100%;
+    color: #ffffff;
+}
+
+.graphql-explorer .doc-explorer-contents .button {
+    background-color:var(--test-query-background);
+    color: #ffffff
+    
+}
+
 .wrapper .supertoolbar {
    display: flex;
    flex-direction: row;
    margin-bottom: 1rem;
+   height: 1rem;
 }
 
 .wrapper .supertoolbar .title {

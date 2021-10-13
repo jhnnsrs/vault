@@ -10,6 +10,9 @@ module.exports = {
   themes: ['@docusaurus/theme-live-codeblock'], // Usually your GitHub org/user name.
   projectName: 'arkitekt', // Usually your repo name.
   themeConfig: {
+    prism: {
+      additionalLanguages: ["groovy","yaml"],
+    },
     colorMode: {
       disableSwitch: true
     },
