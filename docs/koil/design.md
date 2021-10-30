@@ -1,5 +1,5 @@
 ---
-id: koil.design
+id: design
 title: Design
 sidebar_label: Design
 slug: /koil/design

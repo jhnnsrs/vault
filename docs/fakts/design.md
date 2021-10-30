@@ -1,5 +1,5 @@
 ---
-id: fakts.design
+id: design
 title: Design
 sidebar_label: Design
 slug: /fakts/design
