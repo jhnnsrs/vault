@@ -2,7 +2,7 @@
 id: napari    
 title: Napari Support
 sidebar_label: Napari
-slug: /napari
+slug: /apps/napari
 ---
 
 ## What is Immutability
