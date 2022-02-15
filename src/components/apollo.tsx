@@ -10,6 +10,8 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import "./test.css"
 import "./tailwind.css"
 import {Link} from "react-bootstrap-icons";
+import { useFakts } from "./fakts/fakts-context";
+import { EndpointGrant } from "./fakts/grants/EndpointGrant";
 
 export type UnConnectedContext = {
     connect?: (url: string) => void
@@ -28,6 +30,8 @@ export const useUnConnected = () => useContext(UnConnectedApolloContext)
 
 export const ConnectedApollo = ({children, fallback}: any) => {
 
+    const { deleteFakts, fakts } = useFakts()
+
     const {siteConfig} = useDocusaurusContext()
     const [client, setClient] = useState(undefined)
 
@@ -43,6 +47,7 @@ export const ConnectedApollo = ({children, fallback}: any) => {
 
     const disconnect = () => {
 
+        deleteFakts()
         setClient(undefined)
     }
 
@@ -50,16 +55,21 @@ export const ConnectedApollo = ({children, fallback}: any) => {
 
 
     useEffect(() => {
-        let defaultClient = siteConfig.customFields
+        console.log("Reloading")
+        if (fakts) {
+            let uri = `http://${fakts.mikro.host}:${fakts.mikro.port}/graphql`
 
-        const client = new ApolloClient({
-            uri: 'http://localhost:8080/graphql',
-            cache: new InMemoryCache()
-        });
+            const client = new ApolloClient({
+                uri: uri,
+                cache: new InMemoryCache()
+            });
 
-        setClient(client)
+            console.log(uri)
 
-    }, [])
+            setClient(client)
+        }
+
+    }, [fakts])
 
 
     if (!client) {
@@ -69,9 +79,8 @@ export const ConnectedApollo = ({children, fallback}: any) => {
             <div className="supertoolbar">
                 <div className="title">Not Connected</div>
                 <div className="buttonbar">
-                <button onClick={() => connect('http://localhost:8080/graphql')}><Link height={17} color="white"/></button>
+                <EndpointGrant hardFakts={{}} />
                 </div>
-
             </div>{fallback}
         </div>
         </div>
@@ -112,5 +121,5 @@ export const ApolloFallback = (props: any) => {
 
 export const arkitektConnect = (Child, fallback? ) => {
     return (props) => 
-    <ConnectedApollo fallback={fallback ? fallback(props) : <ApolloFallback {...props} />}><Child {...props}/></ConnectedApollo>
+    <ConnectedApollo fallback={fallback}><Child {...props}/></ConnectedApollo>
 }
