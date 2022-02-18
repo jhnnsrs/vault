@@ -1,5 +1,5 @@
 ---
-id: graphql    
+id: graphql
 title: GraphQL
 sidebar_label: GraphQL
 slug: /graphql
@@ -25,7 +25,6 @@ On top of that GraphQL provides some unique features that make it a perfect fit 
 - code generation libraries for typescript and javascript
 - allows real time updates
 
-
 ### Interaction
 
 :::warning
@@ -37,7 +36,7 @@ of tutorials on how to get you started.
 
 :::
 
-<GraphQLPlayground initialQuery="query {representations(order: ['-meta__time_index']){id data}}"/>
+<GraphQLPlayground initialQuery=""/>
 
 The Above example is a GraphQL Playground for easy Prototyping of your Queries. Take some time to
 familiarize with the interface.
