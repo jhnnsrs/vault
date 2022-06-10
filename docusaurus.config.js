@@ -2,7 +2,7 @@ module.exports = {
   title: 'Arkitekt',
   tagline: 'Automating your lab!',
   url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/vault',
+  baseUrl: '/vault/',
   onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favi.png',
