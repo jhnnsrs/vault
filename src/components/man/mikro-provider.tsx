@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FaktsContext, Fakts, FaktsEndpoint } from "./fakts-config";
 
+const window_host = window.location.hostname;
+console.log(`Is hosted on ${window_host}`);
 
 export type FaktsProps = {
   children?: any;

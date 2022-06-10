@@ -5,8 +5,7 @@ sidebar_label: Dashboard
 slug: /dashboard
 ---
 
-import {GraphQLPlayground} from "../../src/components/playgrounds/graphql/GraphQLPlayground";
-import { FlowPlayground } from "../../src/components/playgrounds/flow/FlowPlayground"
+
 
 ### Design
 
@@ -36,8 +35,6 @@ cell count development within these organoids and which image analysis tasks are
 
 Your workflow looks something like this
 
-<FlowPlayground graphurl="/static/graphs/complex.json" height={600}/>
-
 You decide Dashboard should visualize:
 
 - An image of all the Wells **X** with their corresponing latest **z-color coded image**
@@ -57,7 +54,7 @@ showcase your Data live.
 
 ```tsx live
 function Dashboard(props) {
-  const { data, loading } = useQuery(
+  const { data, loading } = useMikroQuery(
     gql`
       query rois {
         rois(representation: 100) {
@@ -93,4 +90,3 @@ function Dashboard(props) {
 
 Just Try it out here. Interestet in different metrics? Use a different Query!
 
-<GraphQLPlayground/>

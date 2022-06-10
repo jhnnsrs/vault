@@ -6,7 +6,18 @@
  */
 
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery as useApolloQuery, gql } from '@apollo/client';
+import { useMikro } from '../../components/mikro/mikro-types';
+
+const useMikroQuery = (params) => {
+  const { client } = useMikro()
+  if (!client) {
+    return { loading: true, data: null }
+  }
+
+  return useApolloQuery({...params, client: client})
+}
+
 
 const ButtonExample = (props) => (
   <button
@@ -26,7 +37,7 @@ const ButtonExample = (props) => (
 const ReactLiveScope = {
   React,
   ...React,
-  useQuery,
+  useMikroQuery,
   gql
 };
 

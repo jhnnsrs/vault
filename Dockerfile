@@ -1,2 +1,2 @@
 # pull official base image
-FROM node:lts-buster
+FROM node:16-buster

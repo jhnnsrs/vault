@@ -2,16 +2,17 @@ module.exports = {
   title: 'Arkitekt',
   tagline: 'Automating your lab!',
   url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
-  onBrokenLinks: 'throw',
+  baseUrl: '/vault',
+  onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favi.png',
   organizationName: 'jhnnsrs',
   themes: ['@docusaurus/theme-live-codeblock'], // Usually your GitHub org/user name.
-  projectName: 'arkitekt', // Usually your repo name.
+  projectName: 'vault', // Usually your repo name.
   themeConfig: {
     prism: {
-      additionalLanguages: ["groovy","yaml"],
+      additionalLanguages: ["groovy", "yaml"],
+
     },
     colorMode: {
       disableSwitch: true
@@ -29,7 +30,7 @@ module.exports = {
           label: 'Docs',
           position: 'left',
         },
-        {to: 'blog', label: 'Blog', position: 'left'},
+        { to: 'blog', label: 'Blog', position: 'left' },
         {
           href: 'https://github.com/jhnnsrs/arkitekt',
           label: 'GitHub',
@@ -109,7 +110,4 @@ module.exports = {
       },
     ],
   ],
-  customFields: {
-    elementsEndpoint: 'ws://localhost:8080/graphql/'
-  }
 };

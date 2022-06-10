@@ -5,7 +5,6 @@ sidebar_label: GraphQL
 slug: /graphql
 ---
 
-import {GraphQLPlayground} from "../../src/components/playgrounds/graphql/GraphQLPlayground"
 
 ### What is GraphQL
 
@@ -35,8 +34,6 @@ of tutorials on how to get you started.
 [GraphQL Official](https://graphql.org/learn/queries/) [How to GraphQL](https://www.howtographql.com/)
 
 :::
-
-<GraphQLPlayground initialQuery=""/>
 
 The Above example is a GraphQL Playground for easy Prototyping of your Queries. Take some time to
 familiarize with the interface.

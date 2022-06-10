@@ -10,109 +10,23 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import "./test.css";
 import "./tailwind.css";
 import { Link } from "react-bootstrap-icons";
-import { useFakts } from "./fakts/fakts-context";
-import { EndpointGrant } from "./fakts/grants/EndpointGrant";
-import { SetGrant } from "./fakts/grants/SetGrant";
+import { useFakts } from "./fakts/fakts-config";
+import { FaktsGuard } from "./fakts/fakts-guard";
+import { HerreGuard } from "./herre/herre-guard";
+import { MikroGuard } from "./mikro/mikro-guard";
+import { useHerre } from "./herre/herre-context";
 
-export type UnConnectedContext = {
-  connect?: (url: string) => void;
-};
-
-export type ConnectedContext = {
-  disconnect?: () => void;
-};
-
-export const UnConnectedApolloContext = React.createContext<UnConnectedContext>(
-  {}
-);
-export const ConnectedApolloContext = React.createContext<ConnectedContext>({});
-
-export const useConnected = () => useContext(ConnectedApolloContext);
-export const useUnConnected = () => useContext(UnConnectedApolloContext);
-
-export const ConnectedApollo = ({ children, fallback }: any) => {
-  const { deleteFakts, fakts } = useFakts();
-
-  const { siteConfig } = useDocusaurusContext();
-  const [client, setClient] = useState(undefined);
-
-  const connect = (url: string) => {
-    let client = new ApolloClient({
-      uri: url,
-      cache: new InMemoryCache(),
-    });
-    setClient(client);
-  };
-
-  const disconnect = () => {
-    deleteFakts();
-    setClient(undefined);
-  };
-
-  useEffect(() => {
-    console.log("Reloading");
-    if (fakts) {
-      let uri = `${fakts.mikro.endpoint_url}`;
-
-      const client = new ApolloClient({
-        uri: uri,
-        cache: new InMemoryCache(),
-      });
-
-      console.log(uri);
-
-      setClient(client);
-    }
-  }, [fakts]);
-
-  if (!client) {
-    return (
-      <UnConnectedApolloContext.Provider value={{ connect }}>
-        <div id="tailwind">
-          <div className="wrapper">
-            <div className="supertoolbar">
-              <div className="title">Not Conntected</div>
-              <div className="buttonbar">
-                <SetGrant hardFakts={{}} />
-              </div>
-            </div>
-            {fallback}
-          </div>
-        </div>
-      </UnConnectedApolloContext.Provider>
-    );
-  }
-
-  return (
-    <ConnectedApolloContext.Provider value={{ disconnect }}>
-      <div id="tailwind">
-        <div className="wrapper">
-          <div className="supertoolbar">
-            <div className="title">
-              Connected to <span>localhost</span>
-            </div>
-            <div className="buttonbar">
-              <button onClick={() => disconnect()}>
-                <Link height={17} color="white" />
-              </button>
-            </div>
-          </div>
-          <ApolloProvider client={client}>{children}</ApolloProvider>
-        </div>
-      </div>
-    </ConnectedApolloContext.Provider>
-  );
-};
-
-export const ApolloFallback = (props: any) => {
-  const { connect } = useUnConnected();
+export const FaktsFallback = (props: any) => {
+  const { load } = useFakts();
 
   return (
     <div className="fallback">
       {" "}
       <button
         className="connect"
-        onClick={() => connect("http://localhost:8080/graphql")}
+        onClick={() =>
+          load({ base_url: "http://localhost:8000/f/", name: "Johannes" })
+        }
       >
         Connect to Localhost{" "}
       </button>{" "}
@@ -120,10 +34,35 @@ export const ApolloFallback = (props: any) => {
   );
 };
 
-export const arkitektConnect = (Child, fallback?) => {
+export const HerreFallback = (props: any) => {
+  const { login } = useHerre();
+
+  return (
+    <div className="fallback">
+      {" "}
+      <button className="connect" onClick={() => login()}>
+        Login
+      </button>{" "}
+    </div>
+  );
+};
+
+export const faktsGuarded = (Child) => {
   return (props) => (
-    <ConnectedApollo fallback={fallback}>
+    <FaktsGuard fallback={<FaktsFallback />}>
       <Child {...props} />
-    </ConnectedApollo>
+    </FaktsGuard>
+  );
+};
+
+export const turtleGuarded = (Child) => {
+  return (props) => (
+    <FaktsGuard fallback={<FaktsFallback />}>
+      <HerreGuard fallback={<HerreFallback />}>
+        <MikroGuard>
+          <Child {...props} />
+        </MikroGuard>
+      </HerreGuard>
+    </FaktsGuard>
   );
 };

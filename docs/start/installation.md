@@ -14,16 +14,14 @@ a lot of different features that might be overkill for your specific needs. Howe
 easily integrate more of the advanced features in your environment. We therefore provide you with different configurations to choose
 from how to deploy the platform in your lab.
 
-
 ### The Easy Way
 
-Download the Configuration Software: 
+Download the Configuration Software:
 
-<DownloadButton>Download Stone</DownloadButton>
+<DownloadButton>Download Jio</DownloadButton>
 
 It will guide you through the installation process and the deployment of the software package on your specific hardware. It will
 also give you a rough estimate of the resources you will need for the installation.
-
 
 ### The Hard Way
 
@@ -31,7 +29,6 @@ Arkitekt as a platform consists of many submodules (microservices) that have the
 a single computer to a complete kubernetes multi-node cluster on the cloud. In this preview we support a docker deployment through
 docker-compose and provide different configurations depending if you have a multi docker machine. We also provide helm-charts for a kubernetes
 deployment.
-
 
 ### Build on the Shoulder of Giants
 
@@ -47,16 +44,10 @@ Arkitekt stitches together a plethora of open-source projects and tries to make 
     </div>
 </div>
 
-
 ### What is a Platform
 
-We choose the term platform deliberatily to seperate it from the common term software. As Arkitekt 
-
-
-
-
-
+We choose the term platform deliberatily to seperate it from the common term software. As Arkitekt
 
 ### Arkitekt doesn't care about Data!
 
-Arkitekt makes no prior assumptions on how you organize your data. 
+Arkitekt makes no prior assumptions on how you organize your data.
