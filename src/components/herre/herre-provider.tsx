@@ -4,6 +4,7 @@ import { Herre, HerreUser } from "./herre-types";
 import { useFakts } from "../fakts/fakts-config";
 import {  AuthService } from "./pkce";
 import useIsBrowser from "@docusaurus/useIsBrowser";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 
 export type WrappedHerreProps = {};
 
@@ -12,6 +13,7 @@ export type HerreProps = {};
 export const WrappedHerre: React.FC<WrappedHerreProps> = (props) => {
 
   const isBrowser = useIsBrowser();
+  const { siteConfig: {baseUrl} } = useDocusaurusContext()
   const [service, setService] = useState<AuthService | undefined>();
   const [user, setUser] = useState<HerreUser | null>(null);
   const [access_token, setAccessToken] = useState<string | null>(null);
@@ -25,11 +27,14 @@ export const WrappedHerre: React.FC<WrappedHerreProps> = (props) => {
         clientSecret: fakts.herre.client_secret.trim(), // TODO: figure out why space?
         location: window.location,
         provider: fakts.herre.base_url,
-        redirectUri: window.location.origin,
+        redirectUri: window.location.origin + baseUrl,
         scopes: fakts.herre.scopes, 
       }, window);
       console.log(`Setting service`, fakts.herre);
       setService(authService);
+    }
+    else {
+      setAccessToken(null)
     }
   }, [fakts]);
 

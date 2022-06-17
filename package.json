@@ -9,16 +9,18 @@
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "serve": "docusaurus serve",
-    "clear": "docusaurus clear"
+    "clear": "docusaurus clear",
+    "wind": "tailwindcss -o src/tailwind.css"
   },
   "dependencies": {
     "@apollo/client": "^3.4.4",
     "@docusaurus/core": "^2.0.0-beta.21",
     "@docusaurus/preset-classic": "^2.0.0-beta.21",
-    "@docusaurus/theme-live-codeblock": "^2.0.0-beta.4",
+    "@docusaurus/theme-live-codeblock": "^2.0.0-beta.21",
     "@graphiql/create-fetcher": "^0.1.0",
     "@mdx-js/react": "^1.6.21",
     "clsx": "^1.1.1",
+    "formik": "^2.2.9",
     "graphiql": "^1.4.2",
     "graphiql-explorer": "^0.6.3",
     "graphql": "^15.5.1",

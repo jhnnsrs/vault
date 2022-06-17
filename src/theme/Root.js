@@ -2,11 +2,12 @@ import React from 'react';
 import { FaktsProvider } from '../components/fakts/fakts-provider';
 import { HerreProvider } from '../components/herre/herre-provider';
 import { MikroProvider } from '../components/mikro/mikro-provider';
+import "../tailwind.css";
 
 function Only({ children }) {
   return (
     <>
-      <FaktsProvider clientId='PsdU71PlUYeC4hP4aDf8pTdm2Hv9xYKdrxCFI5RO' clientSecret='8jXSNhrH7fllN8cGjxg7y2Jl1INb22wlDSmUBepb9aRDGV3al5pfNzswS85MPEvpN5vnfrPkrIERQ6kcMHLiISr4HcYirivdtrnyMjFMlzKGvlCrwfkNJmtQgCLZmH4X'>
+      <FaktsProvider clientId='Zvc8fwLMMINjcAxoaTBG2L6ATlV746D3Zc4T4Wiu' clientSecret='bPDJKpvrZkhqsIvytwJuuLv8SEKeybPaPeMVpIRtdByLUERtyES2v18Dm38PUbVO0myUFAwLzwyWjo4jk91Yrhlfn51DPXN7MxYCIRedXSaNabvINv8EKv3kcWSY8Wos'>
         <HerreProvider>
           <MikroProvider>
 

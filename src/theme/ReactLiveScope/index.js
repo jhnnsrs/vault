@@ -11,27 +11,10 @@ import { useMikro } from '../../components/mikro/mikro-types';
 
 const useMikroQuery = (params) => {
   const { client } = useMikro()
-  if (!client) {
-    return { loading: true, data: null }
-  }
 
-  return useApolloQuery({...params, client: client})
+  return useApolloQuery({ ...params, client: client })
 }
 
-
-const ButtonExample = (props) => (
-  <button
-    {...props}
-    style={{
-      backgroundColor: 'white',
-      border: 'solid red',
-      borderRadius: 20,
-      padding: 10,
-      cursor: 'pointer',
-      ...props.style,
-    }}
-  />
-);
 
 // Add react-live imports you need here
 const ReactLiveScope = {

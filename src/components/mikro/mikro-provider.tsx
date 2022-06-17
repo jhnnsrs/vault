@@ -40,6 +40,9 @@ const UnconnectedMikroProvider: React.FC<ElementsProps> = ({
           .then((result) => result.data);
       };
     }
+    else {
+      setClient(null)
+    }
   }, [token, fakts, register]);
 
   const s3resolve = (path?: string | null) => {
